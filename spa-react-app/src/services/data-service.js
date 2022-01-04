@@ -7,7 +7,7 @@ class DataService {
   }
 
   getTimeline(fromRawData) {
-    return fromRawData[0].slice(1).map((itm, idx) => idx + 1);
+    return fromRawData[0].slice(1).map((itm, idx) => ({ val: idx, item: itm}));
   }
 
   getLabels(fromRawData) {

@@ -40,12 +40,12 @@ function App() {
   }
 
   const removeFromTimeline = (label) => {
-    const labelIndex = timeline.indexOf(label);
+    const labelIndex = timeline.find((element) => element.item == label)
     labels.forEach(l => {
       chartData[l].splice(labelIndex,1);
     });
     setChartData({...chartData});
-    setTimeline(timeline.filter(time => time !== label));
+    setTimeline(timeline.filter(time => time.item !== label));
   }
 
   const onRestart = () => {
@@ -64,7 +64,7 @@ function App() {
           </div>
           <div className="selection-menu">
           <h4>Хронологична Единица</h4>
-            {timeline.map(key => (<RemovableItem name={key} onRemove={removeFromTimeline}/>))}
+            {timeline.map(key => (<RemovableItem name={key.item} onRemove={removeFromTimeline}/>))}
           </div>
         </div>
         <div className="chart-layout">
@@ -96,6 +96,7 @@ function App() {
               width={[20, 60, 20]}
             /> : null} 
           </div>
+          {console.log(chartData)}
           <button className="start-button" onClick={() => {
             setStart(value => !value);
             if (start) {

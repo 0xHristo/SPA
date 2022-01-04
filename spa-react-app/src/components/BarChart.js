@@ -181,7 +181,7 @@ function (_React$Component) {
         style: classes.container
       }, _react["default"].createElement("div", {
         style: this.props.timelineStyle
-      }, this.props.timeline[this.state.idx]), _react["default"].createElement("div", {
+      }, this.props.timeline[this.state.idx].item), _react["default"].createElement("div", {
         style: _objectSpread({}, classes.barChart, {}, this.barChartStyle)
       }, Object.keys(this.props.data).map(function (name) {
         var _this2$getInfoFromRan = _this2.getInfoFromRank(name),
