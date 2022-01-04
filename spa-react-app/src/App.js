@@ -1,5 +1,7 @@
+"use strict";
+
 import './App.css';
-import BarChart from 'chart-race-react'; 
+import BarChart from './components/BarChart'; 
 import {mock_data} from './data/ptp_yearly';
 import { RemovableItem } from './components/removable-item';
 import { dataService } from './services/data-service';
