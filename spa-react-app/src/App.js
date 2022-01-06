@@ -6,13 +6,21 @@ import {mock_data} from './data/ptp_yearly';
 import { RemovableItem } from './components/removable-item';
 import { dataService } from './services/data-service';
 import { useState } from 'react';
+import { neuralNetworkDataService } from './services/ai-service'
 
+const NeuralNetworkData = () => {
+  const inputLayerObject = dataService.getData(mock_data)
+  const inputTimeline = dataService.getTimeline(mock_data)
+  const { outputLayerObject, outputTimeline } = neuralNetworkDataService(inputTimeline, inputLayerObject)
+  return [outputLayerObject, dataService.getLabels(mock_data), outputTimeline]
+}
 
 function App() {
+  const nnData = NeuralNetworkData()
   const [start, setStart] = useState(false);
-  const [chartData, setChartData] = useState(dataService.getData(mock_data));
-  const [labels, setLabels] = useState(dataService.getLabels(mock_data));
-  const [timeline, setTimeline] = useState(dataService.getTimeline(mock_data));
+  const [chartData, setChartData] = useState(nnData[0]);
+  const [labels, setLabels] = useState(nnData[1]);
+  const [timeline, setTimeline] = useState(nnData[2]);
 
   const randomColor = () => {
     return `rgb(${255 * Math.random()}, ${255 * Math.random()}, ${255})`;
@@ -27,7 +35,7 @@ function App() {
     return{
     ...res, 
     ...{[item]: (
-      <div style={{textAlign:"center",}}>
+      <div style={{textAlign:"right", marginRight:"10px"}}>
         <div>{item}</div>
       </div>
       )}
@@ -49,9 +57,10 @@ function App() {
   }
 
   const onRestart = () => {
-    setChartData(dataService.getData(mock_data));
-    setLabels(dataService.getLabels(mock_data));
-    setTimeline(dataService.getTimeline(mock_data));
+    const neuralNetworkData = NeuralNetworkData();
+    setChartData(neuralNetworkData[0]);
+    setLabels(neuralNetworkData[1]);
+    setTimeline(neuralNetworkData[2]);
   }
 
   return (
@@ -84,16 +93,19 @@ function App() {
                 marginBottom: "100px"
               }}
               textBoxStyle={{
-                textAlign: "center",
+                textAlign: "right",
+                marginLeft: "10px",
                 color: "rgb(133, 131, 131)",
                 fontSize: "30px",
+                width: "30px"
               }}
               barStyle={{
                 height: "40px",
                 marginTop: "10px",
-                borderRadius: "10px",
+                borderRadius: "5px",
               }}
               width={[20, 60, 20]}
+              maxItems={10}
             /> : null} 
           </div>
           {console.log(chartData)}

@@ -59,9 +59,14 @@
   width: 150px;
 }
 
+.removable {
+  text-align: left;
+  width: 200px;
+}
+
 .removable:hover {
   background-color: red;
-  border-radius: 10px;
+  border-radius: 5px;
 }
 
 .start-button {
